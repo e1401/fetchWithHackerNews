@@ -1,4 +1,8 @@
-import React from 'react'
+import React from 'react';
+import MyLoader from './MyLoader';
+
+
+
 const API = 'https://hn.algolia.com/api/v1/search?query=';
     const DEFAULT_QUERY = 'hacker';
 
@@ -29,7 +33,8 @@ export default class ApiCall extends React.Component {
        render() {
         const { hits, isLoading } = this.state;
         if (isLoading) {
-            return <p>Loading from isLoading: true</p>
+            // return <p>Loading from isLoading: true</p>
+            return <MyLoader />
         }
         console.log(this.state)
         return (
