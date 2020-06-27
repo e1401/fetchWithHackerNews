@@ -15,6 +15,7 @@ export default class ApiCall extends React.Component {
         this.state = {
           hits: [],
           isLoading: false,
+          error: null,
         };
         console.log(this.state)
       }
@@ -25,13 +26,25 @@ export default class ApiCall extends React.Component {
 
         this.setState({ isLoading: true })
         fetch(API + DEFAULT_QUERY)
-          .then(response => response.json())
-          .then(data => this.setState({ hits: data.hits, isLoading: false }));
+        .then (response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw new Error ('Error has happened')
+            }
+        })
+        //   .then(response => response.json()) initial code
+          .then(data => this.setState({ hits: data.hits, isLoading: false }))
+          .catch(error => this.setState( {error, isLoading: false} ));
           
       };
  
        render() {
-        const { hits, isLoading } = this.state;
+        const { hits, isLoading, error } = this.state;
+        if (error) {
+            return <p>{error.message}</p>
+        }
+        
         if (isLoading) {
             // return <p>Loading from isLoading: true</p>
             return <MyLoader />
