@@ -10,6 +10,7 @@ export default class ApiCall extends React.Component {
      
         this.state = {
           hits: [],
+          isLoading: false,
         };
         console.log(this.state)
       }
@@ -17,22 +18,26 @@ export default class ApiCall extends React.Component {
     
 
       componentDidMount() {
+
+        this.setState({ isLoading: true })
         fetch(API + DEFAULT_QUERY)
           .then(response => response.json())
-          .then(data => this.setState({ hits: data.hits }));
+          .then(data => this.setState({ hits: data.hits, isLoading: false }));
           
-      }
-
-;
+      };
  
        render() {
-        const { hits } = this.state;
+        const { hits, isLoading } = this.state;
+        if (isLoading) {
+            return <p>Loading from isLoading: true</p>
+        }
         console.log(this.state)
         return (
           <ul>
             {hits.map(hit =>
               <li key={hit.objectID}>
                 <a href={hit.url}>{hit.title}</a>
+                <p>Written by {hit.author}</p>
               </li>
             )}
           </ul>

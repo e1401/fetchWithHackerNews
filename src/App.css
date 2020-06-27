@@ -40,5 +40,20 @@
 
 
 body {
-  padding: 50px;
+  padding: 5em;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  border: 1px solid red;
+  align-items: center;
+}
+
+li p {
+  text-transform: capitalize;
+  margin: 10px;
+  color: brown;
+  
 }
